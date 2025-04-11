@@ -1,44 +1,5 @@
 #!/bin/bash
 
-# SSH публичный ключ для доступа !!!
-SSH_KEY=""
-
-# Зона (zone)
-ZONE="ru-central1-b"
-
-# Группа безопасности для внутренней сети !!!
-INTERNAL_SG_ID=
-# Внутренняя подсеть !!!
-INTERNAL_SUBNET_ID=
-
-# Настройки сервера bastion
-# Наименование сервера bastion
-BASTION_NAME="otus-bastion-host"
-# Локальный IP bastion
-BASTION_INTERNAL_IP="172.16.16.254"
-# Пользователь для сервера bastion
-BASTION_USER="bastion"
-# IP внешний (IP external)
-EXTERNAL_IP_VAL="130.193.40.115"
-# Группа безопасности для внешней сети !!!
-EXTERNAL_SG_ID=
-# Внешняя подсеть !!!
-EXTERNAL_SUBNET_ID=
-
-# Настройки внутреннего сервера 1
-# Наименование
-INTERNAL_SERVER_1_NAME="otus-test-vm-1"
-# Пользователь
-INTERNAL_SERVER_1_USER="test"
-
-# Настройки внутреннего сервера 2
-# Наименование
-INTERNAL_SERVER_2_NAME="otus-test-vm-2"
-# Пользователь
-INTERNAL_SERVER_2_USER="test"
-
-### ------------------------------------------------------------------
-
 # Создание сервера bastion
 echo -e "#cloud-config\n"\
 "users:\n"\

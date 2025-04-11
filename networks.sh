@@ -1,47 +1,5 @@
 #!/bin/bash
 
-# SSH публичный ключ для доступа !!!
-SSH_KEY=""
-
-# Зона (zone)
-ZONE="ru-central1-b"
-
-# Имя для IP (IP name)
-IP_NAME="bastion-public-ip"
-
-# Настройки внешней сети (external network settings)
-# Имя сети (network name)
-EXTERNAL_NETWORK_NAME="external-bastion-network"
-# Имя подсети (subnet name)
-EXTERNAL_SUBNET_NAME="bastion-external-segment"
-# CIDR
-EXTERNAL_CIDR="172.16.17.0/28"
-
-# Настройки внутренней сети (internal network settings)
-# Имя сети (network name)
-INTERNAL_NETWORK_NAME="internal-bastion-network"
-# Имя подсети (subnet name)
-INTERNAL_SUBNET_NAME="bastion-internal-segment"
-# CIDR
-INTERNAL_CIDR="172.16.16.0/24"
-
-# Группа безопастности для внешней сети (security group for external network)
-# Имя (Name)
-EXTERNAL_SG_NAME="secure-bastion-sg"
-# Правила на входящий CIDR (incoming CIDR rules)
-EXTERNAL_SG_INCOM_CIDR="0.0.0.0/0"
-
-# Группа безопастности для внутренней сети (security group for internal network)
-# Имя (Name)
-INTERNAL_SG_NAME="internal-bastion-sg"
-# Правила на входящий CIDR (incoming CIDR rules)
-INTERNAL_SG_INCOM_CIDR="172.16.16.254/32"
-
-# Открываемый порт (opening port)
-OPENING_PORT=22
-
-### ------------------------------------------------------------------
-
 # Создание внешней сети
 echo -e "\e[32m""Creating an external network: $EXTERNAL_NETWORK_NAME""\e[0m"
 EXTERNAL_NETWORK_ID=$(yc vpc network create --name "$EXTERNAL_NETWORK_NAME" --format json | jq -r .id)
