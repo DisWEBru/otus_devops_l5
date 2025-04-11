@@ -8,7 +8,7 @@ EXTERNAL_NETWORK_ID=$(yc vpc network create --name "$EXTERNAL_NETWORK_NAME" --fo
 echo -e "\e[32m""Creating a subnet: $EXTERNAL_SUBNET_NAME""\e[0m"
 EXTERNAL_SUBNET_ID=$(yc vpc subnet create \
   --name "$EXTERNAL_SUBNET_NAME" \
-  --zone "$ZONE" \
+  --zone "$YC_COMPUTE_DEFAULT_ZONE" \
   --range "$EXTERNAL_CIDR" \
   --network-id "$EXTERNAL_NETWORK_ID" \
   --format json | jq -r .id)
@@ -23,7 +23,7 @@ INTERNAL_NETWORK_ID=$(yc vpc network create --name "$INTERNAL_NETWORK_NAME" --fo
 echo -e "\e[32m""Creating subnet: $INTERNAL_SUBNET_NAME""\e[0m"
 INTERNAL_SUBNET_ID=$(yc vpc subnet create \
   --name "$INTERNAL_SUBNET_NAME" \
-  --zone "$ZONE" \
+  --zone "$YC_COMPUTE_DEFAULT_ZONE" \
   --range "$INTERNAL_CIDR" \
   --network-id "$INTERNAL_NETWORK_ID" \
   --format json | jq -r .id)
@@ -70,7 +70,7 @@ echo -e "Security group ID \"$INTERNAL_SG_NAME\": ""\033[33m""$INTERNAL_SG_ID""\
 echo -e "\e[32m""Public IP reservation""\e[0m"
 EXTERNAL_IP=$(yc vpc address create \
   --name "$IP_NAME" \
-  --external-ipv4=[zone="$ZONE"] \
+  --external-ipv4=[zone="$YC_COMPUTE_DEFAULT_ZONE"] \
   --format json)
 
 EXTERNAL_IP_VAL=$(echo "$EXTERNAL_IP" | jq -r .external_ipv4_address.address)
