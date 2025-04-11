@@ -1,0 +1,12 @@
+services:
+    disweb.yandex.cli:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: disweb.yandex.cli
+        container_name: disweb.yandex.cli
+        environment:
+            YC_TOKEN: "${YC_TOKEN:-}"
+            YC_CLOUD_ID: "${YC_CLOUD_ID:-}"
+            YC_FOLDER_ID: "${YC_FOLDER_ID:-}"
+            YC_COMPUTE_DEFAULT_ZONE: "${YC_COMPUTE_DEFAULT_ZONE:-ru-central1-b}"
