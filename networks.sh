@@ -40,7 +40,13 @@ EXTERNAL_SG_ID=$(yc vpc security-group create \
 # Добавление входящего правила в группу безопасности для внешней сети
 echo -e "\e[32m""Adding an incoming rule to $EXTERNAL_SG_NAME""\e[0m"
 EXTERNAL_ROLE_INCOMING=$(yc vpc security-group update-rules "$EXTERNAL_SG_ID" \
-  --add-rule "direction=ingress,port=$OPENING_PORT,protocol=tcp,v4-cidrs=[$EXTERNAL_SG_INCOM_CIDR]"
+  --add-rule "direction=ingress,from-port=1,to-port=65535,protocol=any,v4-cidrs=[$EXTERNAL_SG_INCOM_CIDR]"
+  --format json)
+
+# Добавление исходящего правила в группу безопасности для внешней сети
+echo -e "\e[32m""Adding an outcoming rule to $EXTERNAL_SG_NAME""\e[0m"
+EXTERNAL_ROLE_OUTCOMING=$(yc vpc security-group update-rules "$EXTERNAL_SG_ID" \
+  --add-rule "direction=egress,from-port=1,to-port=65535,protocol=any,v4-cidrs=[$EXTERNAL_SG_INCOM_CIDR]"
   --format json)
 
 echo -e "Security group ID \"$EXTERNAL_SG_NAME\": ""\033[33m""$EXTERNAL_SG_ID""\e[0m"
@@ -55,13 +61,13 @@ INTERNAL_SG_ID=$(yc vpc security-group create \
 # Добавление входящего правила в группу безопасности для внутренней сети
 echo -e "\e[32m""Adding an incoming rule to $INTERNAL_SG_NAME""\e[0m"
 INTERNAL_ROLE_INCOMING=$(yc vpc security-group update-rules "$INTERNAL_SG_ID" \
-  --add-rule "direction=ingress,port=$OPENING_PORT,protocol=tcp,v4-cidrs=[$INTERNAL_SG_INCOM_CIDR]"
+  --add-rule "direction=ingress,from-port=1,to-port=65535,protocol=any,v4-cidrs=[$INTERNAL_SG_INCOM_CIDR]"
   --format json)
 
 # Добавление исходящего правила в группу безопасности для внутренней сети
 echo -e "\e[32m""Adding an outcoming rule to $INTERNAL_SG_NAME""\e[0m"
 INTERNAL_ROLE_OUTCOMING=$(yc vpc security-group update-rules "$INTERNAL_SG_ID" \
-  --add-rule "direction=egress,port=$OPENING_PORT,protocol=tcp,predefined=self_security_group"
+  --add-rule "direction=egress,from-port=1,to-port=65535,protocol=any,v4-cidrs=[$INTERNAL_SG_INCOM_CIDR]"
   --format json)
 
 echo -e "Security group ID \"$INTERNAL_SG_NAME\": ""\033[33m""$INTERNAL_SG_ID""\e[0m"
